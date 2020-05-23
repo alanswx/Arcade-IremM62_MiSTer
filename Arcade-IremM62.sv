@@ -335,7 +335,8 @@ wire m_fire     = btn_fire    | joy1[4];
 wire m_fire_2   = btn_fire_2  | joy2[4];
 wire m_start    = btn_start_1 | joy1[5] | joy2[5];
 wire m_start_2  = btn_start_2 | joy1[6] | joy2[6];
-wire m_coin     = btn_coin    | joy1[7] | joy2[7] | btn_coin_1 | btn_coin_2;
+wire m_coin_1     = btn_coin    | joy1[7] | btn_coin_1  ;
+wire m_coin_2     =  joy2[7] | btn_coin_2;
 
 wire m_cheat    = btn_cheat | joy1[8] | joy2[8];
 
@@ -490,18 +491,18 @@ wire        blankn = 1'b1;//todo
 
 target_top target_top(
 	.clock_sys(clk_sys),//24 MHz
-	.vid_clk_en(clkref),
+	.vid_clk_en(clkref), // output clk??
 	.clk_aud(clk_aud),//0.895MHz
 	.reset_in(reset),
-	.hwsel(core_mod),
-	.palmode(palmode),
+	.hwsel(core_mod), // see pkgvariant defines
+	.palmode(1'b0/*palmode*/),
 	.audio_out(audio),
 	.switches_i(DSW1),
-	.usr_coin1(m_coin1),
-	.usr_coin2(m_coin2),
-	.usr_service(service),
-	.usr_start1(m_one_player),
-	.usr_start2(m_two_players),
+	.usr_coin1(m_coin_1),
+	.usr_coin2(m_coin_2),
+	.usr_service(1'b0/*service*/),
+	.usr_start1(m_start),
+	.usr_start2(m_start_2),
 	.p1_up(m_up),
 	.p1_dw(m_down),
 	.p1_lt(m_left),
