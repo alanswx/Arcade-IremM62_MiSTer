@@ -64,11 +64,11 @@ module sdram (
 	input      [15:0] port2_d,
 	output reg [31:0] port2_q,
 	
-   input      [23:2] chr1_addr,
+   input      [19:2] chr1_addr,
    output reg [31:0] chr1_q,
-   input      [23:2] chr2_addr,
+   input      [19:2] chr2_addr,
    output reg [31:0] chr2_q,
-	input      [23:2] sp_addr,
+	input      [19:2] sp_addr,
 	output reg [31:0] sp_q
 );
 
@@ -165,10 +165,10 @@ assign SDRAM_nRAS = sd_cmd[2];
 assign SDRAM_nCAS = sd_cmd[1];
 assign SDRAM_nWE  = sd_cmd[0];
 
-reg [23:1] addr_latch[3];
-reg [23:1] addr_latch_next[2];
+reg [24:1] addr_latch[3];
+reg [24:1] addr_latch_next[2];
 reg [23:1] addr_last[4];
-reg [23:2] addr_last2[4];
+reg [19:2] addr_last2[4];
 reg [15:0] din_latch[2];
 reg  [1:0] oe_latch;
 reg  [1:0] we_latch;

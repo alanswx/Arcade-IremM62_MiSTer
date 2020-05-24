@@ -301,35 +301,8 @@ reg btn_left_2=0;
 reg btn_right_2=0;
 reg btn_fire_2=0;
 
-wire no_rotate = status[2] | direct_video | mod_ponp;
+wire no_rotate = status[2] | direct_video  ;
 
-wire m_up,m_down,m_left,m_right;
-joyonedir jod
-(
-	clk_sys,
-	mod_bird,
-	{
-		btn_up    | joy1[3],
-		btn_down  | joy1[2],
-		btn_left  | joy1[1],
-		btn_right | joy1[0]
-	},
-	{m_up,m_down,m_left,m_right}
-);
-
-wire m_up_2,m_down_2,m_left_2,m_right_2;
-joyonedir jod_2
-(
-	clk_sys,
-	mod_bird,
-	{
-		btn_up_2    | joy2[3],
-		btn_down_2  | joy2[2],
-		btn_left_2  | joy2[1],
-		btn_right_2 | joy2[0]
-	},
-	{m_up_2,m_down_2,m_left_2,m_right_2}
-);
 
 wire m_fire     = btn_fire    | joy1[4];
 wire m_fire_2   = btn_fire_2  | joy2[4];
@@ -358,7 +331,7 @@ assign HDMI_B = VGA_B;
 assign HDMI_HS=VGA_HS;
 assign HDMI_VS=VGA_VS;
 assign HDMI_DE = VGA_DE;
-assign VGA_R = {r , 4'b0};
+assign VGA_R = {4'b1111 , 4'b0};
 assign VGA_G = {g , 4'b0};
 assign VGA_B = {b , 4'b0};
 assign VGA_HS= hs;
@@ -366,8 +339,8 @@ assign VGA_VS =vs;
 assign VGA_DE = ~(vblank | hblank);
 //assign VGA_F1,
 
-
 /*
+
 reg ce_pix;
 always @(posedge clk_vid) begin
         reg [2:0] div;
@@ -378,7 +351,7 @@ end
 
 
 
-arcade_video #(400,256,12) arcade_video
+arcade_video #(256,400,12) arcade_video
 (
 	.*,
 
@@ -395,13 +368,10 @@ arcade_video #(400,256,12) arcade_video
 );
 
 */
+
 assign AUDIO_L = {audio, 4'd0};
 assign AUDIO_R = AUDIO_L;
-assign AUDIO_S = mod_van;
-
-wire [7:0] in0xor = mod_ponp ? 8'hE0 : 8'hFF;
-wire [7:0] in1xor = mod_ponp ? 8'h00 : 8'hFF;
-
+assign AUDIO_S = 1'b0;
 
 
 wire [16:0] rom_addr;
@@ -566,31 +536,3 @@ target_top target_top(
 
 endmodule
 
-module joyonedir
-(
-	input        clk,
-	input        dis,
-	input  [3:0] indir,
-	output [3:0] outdir
-);
-
-reg  [3:0] mask = 0;
-reg  [3:0] in1,in2;
-wire [3:0] innew = in1 & ~in2;
-
-assign outdir = in1 & mask;
-
-always @(posedge clk) begin
-	
-	in1 <= indir;
-	in2 <= in1;
-	
-	if(innew[0]) mask <= 1;
-	if(innew[1]) mask <= 2;
-	if(innew[2]) mask <= 4;
-	if(innew[3]) mask <= 8;
-	
-	if(!(indir & mask) || dis) mask <= '1;
-end
-
-endmodule
