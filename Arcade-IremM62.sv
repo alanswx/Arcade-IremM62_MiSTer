@@ -344,6 +344,30 @@ wire hblank, vblank;
 wire hs, vs;
 wire [3:0] r,g,b;
 
+
+//wire CLK_VIDEO = clkref;
+wire CLK_VIDEO = clk_vid;
+assign CE_PIXEL  = 1;
+assign HDMI_CLK = CLK_VIDEO;
+assign VGA_CLK = CLK_VIDEO;
+assign HDMI_CE = CE_PIXEL;
+assign VGA_CE = CE_PIXEL;
+assign HDMI_R = VGA_R;
+assign HDMI_G = VGA_G;
+assign HDMI_B = VGA_B;
+assign HDMI_HS=VGA_HS;
+assign HDMI_VS=VGA_VS;
+assign HDMI_DE = VGA_DE;
+assign VGA_R = {r , 4'b0};
+assign VGA_G = {g , 4'b0};
+assign VGA_B = {b , 4'b0};
+assign VGA_HS= hs;
+assign VGA_VS =vs;
+assign VGA_DE = ~(vblank | hblank);
+//assign VGA_F1,
+
+
+/*
 reg ce_pix;
 always @(posedge clk_vid) begin
         reg [2:0] div;
@@ -354,7 +378,7 @@ end
 
 
 
-arcade_video #(288,224,12) arcade_video
+arcade_video #(400,256,12) arcade_video
 (
 	.*,
 
@@ -370,6 +394,7 @@ arcade_video #(288,224,12) arcade_video
 	.fx(status[5:3])
 );
 
+*/
 assign AUDIO_L = {audio, 4'd0};
 assign AUDIO_R = AUDIO_L;
 assign AUDIO_S = mod_van;
@@ -417,7 +442,7 @@ sdram sdram(
 	.*,
 	.init_n        ( pll_locked   ),
 	.clk           ( clk_mem       ),
-
+	.clkref(clkref),
 	// port1 used for main + sound CPU
 	.port1_req     ( port1_req    ),
 	.port1_ack     ( ),
@@ -487,7 +512,6 @@ always @(posedge clk_sys) begin
 end
 
 wire [11:0] audio;
-wire        blankn = 1'b1;//todo
 
 target_top target_top(
 	.clock_sys(clk_sys),//24 MHz

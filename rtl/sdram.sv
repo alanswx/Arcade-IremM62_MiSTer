@@ -39,6 +39,7 @@ module sdram (
 	// cpu/chipset interface
 	input             init_n,     // init signal after FPGA config to initialize RAM
 	input             clk,        // sdram clock
+	input             clkref,        // sdram clock
 
 	input             port1_req,
 	output reg        port1_ack,
@@ -117,7 +118,11 @@ localparam STATE_LAST      = 3'd6;
 
 reg [2:0] t;
 always @(posedge clk) begin
-	t <= t + 1'd1;
+	reg clkref_d;
+	clkref_d <= clkref;
+	if ((~clkref_d && clkref && t == 4'd2) || (t != 4'd2)) t <= t + 1'd1;
+
+//	t <= t + 1'd1;
 	if (t == STATE_LAST) t <= STATE_FIRST;
 end
 
