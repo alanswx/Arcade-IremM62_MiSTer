@@ -104,8 +104,8 @@ assign LED_USER  = ioctl_download;
 assign LED_DISK  = 0;
 assign LED_POWER = 0;
 
-assign HDMI_ARX = status[1] ? 8'd16 : (status[2] | mod_ponp) ? 8'd4 : 8'd3;
-assign HDMI_ARY = status[1] ? 8'd9  : (status[2] | mod_ponp) ? 8'd3 : 8'd4;
+assign HDMI_ARX = status[1] ? 8'd16 : (status[2]  ) ? 8'd4 : 8'd3;
+assign HDMI_ARY = status[1] ? 8'd9  : (status[2]  ) ? 8'd3 : 8'd4;
 
 `include "build_id.v" 
 localparam CONF_STR = {
@@ -115,6 +115,8 @@ localparam CONF_STR = {
 	"O35,Scandoubler Fx,None,HQ2x,CRT 25%,CRT 50%,CRT 75%;",
 	"-;",
 	"DIP;",
+	"-;",
+	"OA,Service,Off,On;",
 	"-;",
 	"R0,Reset;",
 	"J1,Fire,Start 1P,Start 2P,Coin,Cheat;",
@@ -127,14 +129,20 @@ reg  [1:0] orientation = 2'b10;
 reg        oneplayer;
 wire [7:0] DSW1 = {/*coinage*/4'hf, ~status[11:8]};
 
+reg [7:0] core_mod = 0;
+
+always @(posedge clk_sys) begin
+        if (ioctl_wr & (ioctl_index==1)) core_mod <= ioctl_dout;
+end
+
 always @(*) begin
   orientation = 2'b10;
   oneplayer = 1;
 
   case (core_mod)
-  7'h3: oneplayer = 0; // LDRUN4
-  7'h6: orientation = 2'b11; // BATTROAD
-  7'hB: orientation = 2'b01; // YOUJYUDN
+  8'h3: oneplayer = 0; // LDRUN4
+  8'h6: orientation = 2'b11; // BATTROAD
+  8'hB: orientation = 2'b01; // YOUJYUDN
   default: ;
   endcase
 end
@@ -163,6 +171,7 @@ wire  [1:0] buttons;
 wire        forced_scandoubler;
 wire        direct_video;
 
+wire        ioctl_download_2;
 wire        ioctl_download;
 wire  [7:0] ioctl_index;
 wire        ioctl_wr;
@@ -171,8 +180,8 @@ wire  [7:0] ioctl_dout;
 
 wire [10:0] ps2_key;
 
-wire [15:0] joy1 = (mod_club | mod_jmpst) ? joy1a : (joy1a | joy2a);
-wire [15:0] joy2 = (mod_club | mod_jmpst) ? joy2a : (joy1a | joy2a);
+wire [15:0] joy1 = joy1a;
+wire [15:0] joy2 = joy2a;
 wire [15:0] joy1a;
 wire [15:0] joy2a;
 
@@ -187,12 +196,12 @@ hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
 
 	.buttons(buttons),
 	.status(status),
-	.status_menumask({mod_ponp,direct_video}),
+	.status_menumask(direct_video),
 	.forced_scandoubler(forced_scandoubler),
 	.gamma_bus(gamma_bus),
 	.direct_video(direct_video),
 
-	.ioctl_download(ioctl_download),
+	.ioctl_download(ioctl_download_2),
 	.ioctl_wr(ioctl_wr),
 	.ioctl_addr(ioctl_addr),
 	.ioctl_dout(ioctl_dout),
@@ -203,48 +212,7 @@ hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
 	.ps2_key(ps2_key)
 );
 
-reg mod_plus = 0;
-reg mod_jmpst= 0;
-reg mod_club = 0;
-reg mod_orig = 0;
-//reg mod_crush= 0;
-reg mod_bird = 0;
-reg mod_ms   = 0;
-reg mod_gork = 0;
-reg mod_mrtnt= 0;
-reg mod_woodp= 0;
-reg mod_eeek = 0;
-reg mod_alib = 0;
-reg mod_ponp = 0;
-reg mod_van  = 0;
-reg mod_pmm  = 0;
-reg mod_dshop= 0;
-reg mod_glob = 0;
-
-wire mod_gm = mod_gork | mod_mrtnt;
-
-always @(posedge clk_sys) begin
-	reg [7:0] mod = 0;
-	if (ioctl_wr & (ioctl_index==1)) mod <= ioctl_dout;
-	
-	mod_orig <= (mod == 0);
-	mod_plus <= (mod == 1);
-	mod_club <= (mod == 2);
-	//mod_crush<= (mod == 3);
-	mod_bird <= (mod == 4);
-	mod_ms   <= (mod == 5);
-	mod_gork <= (mod == 6);
-	mod_mrtnt<= (mod == 7);
-	mod_woodp<= (mod == 8);
-	mod_eeek <= (mod == 9);
-	mod_alib <= (mod == 10);
-	mod_ponp <= (mod == 11);
-	mod_van  <= (mod == 12);
-	mod_pmm  <= (mod == 13);
-	mod_dshop<= (mod == 14);
-	mod_glob <= (mod == 15);
-	mod_jmpst<= (mod == 16);
-end
+assign ioctl_download = ioctl_download_2 & !ioctl_index;
 
 reg [7:0] sw[8];
 always @(posedge clk_sys) if (ioctl_wr && (ioctl_index==254) && !ioctl_addr[24:3]) sw[ioctl_addr[2:0]] <= ioctl_dout;
@@ -261,8 +229,8 @@ always @(posedge clk_sys) begin
 			'hX72: btn_down        <= pressed; // down
 			'hX6B: btn_left        <= pressed; // left
 			'hX74: btn_right       <= pressed; // right
-			'h029: btn_fire        <= pressed; // space
-			'h014: btn_fire        <= pressed; // ctrl
+			'h029: btn_fireA        <= pressed; // space
+			'h014: btn_fireB        <= pressed; // ctrl
 
 			'h005: btn_start_1     <= pressed; // F1
 			'h006: btn_start_2     <= pressed; // F2
@@ -278,7 +246,7 @@ always @(posedge clk_sys) begin
 			'h02B: btn_down_2      <= pressed; // F
 			'h023: btn_left_2      <= pressed; // D
 			'h034: btn_right_2     <= pressed; // G
-			'h01C: btn_fire_2      <= pressed; // A
+			'h01C: btn_fireA_2      <= pressed; // A
 		endcase
 	end
 end
@@ -288,7 +256,8 @@ reg btn_down  = 0;
 reg btn_right = 0;
 reg btn_left  = 0;
 reg btn_coin  = 0;
-reg btn_fire  = 0;
+reg btn_fireA  =0;
+reg btn_fireB  = 0;
 reg btn_cheat = 0;
 
 reg btn_start_1=0;
@@ -299,19 +268,29 @@ reg btn_up_2=0;
 reg btn_down_2=0;
 reg btn_left_2=0;
 reg btn_right_2=0;
-reg btn_fire_2=0;
+reg btn_fireA_2=0;
 
 wire no_rotate = status[2] | direct_video  ;
 
-
-wire m_fire     = btn_fire    | joy1[4];
-wire m_fire_2   = btn_fire_2  | joy2[4];
 wire m_start    = btn_start_1 | joy1[5] | joy2[5];
 wire m_start_2  = btn_start_2 | joy1[6] | joy2[6];
 wire m_coin_1     = btn_coin    | joy1[7] | btn_coin_1  ;
 wire m_coin_2     =  joy2[7] | btn_coin_2;
 
 wire m_cheat    = btn_cheat | joy1[8] | joy2[8];
+wire m_up     =   btn_up    | joy1[3];
+wire m_down   =   btn_down  | joy1[2];
+wire m_left   =  btn_left  | joy1[1];
+wire m_right  =  btn_right | joy1[0];
+wire m_fireA   = btn_fireA | joy1[4];
+wire m_fireB   = btn_fireB | joy1[5];
+
+wire m_up_2     =  btn_up_2    | joy2[3];
+wire m_down_2   =  btn_down_2  | joy2[2];
+wire m_left_2   =  btn_left_2  | joy2[1];
+wire m_right_2  =  btn_right_2 | joy2[0];
+wire m_fireA_2   = btn_fireA_2 | joy2[4];
+wire m_fireB_2   = /*btn_fire_2 |*/ joy2[5];
 
 wire hblank, vblank;
 wire hs, vs;
@@ -320,7 +299,8 @@ wire [3:0] r,g,b;
 
 //wire CLK_VIDEO = clkref;
 wire CLK_VIDEO = clk_vid;
-assign CE_PIXEL  = 1;
+//wire CE_PIXEL  = 1;
+wire CE_PIXEL  = clkref;
 assign HDMI_CLK = CLK_VIDEO;
 assign VGA_CLK = CLK_VIDEO;
 assign HDMI_CE = CE_PIXEL;
@@ -331,9 +311,9 @@ assign HDMI_B = VGA_B;
 assign HDMI_HS=VGA_HS;
 assign HDMI_VS=VGA_VS;
 assign HDMI_DE = VGA_DE;
-assign VGA_R = {4'b1111 , 4'b0};
-assign VGA_G = {g , 4'b0};
-assign VGA_B = {b , 4'b0};
+assign VGA_R = {r , r};
+assign VGA_G = {g , g};
+assign VGA_B = {b , b};
 assign VGA_HS= hs;
 assign VGA_VS =vs;
 assign VGA_DE = ~(vblank | hblank);
@@ -426,8 +406,6 @@ sdram sdram(
 	.cpu1_q        ( rom_do ),
 	.cpu2_addr     ( ioctl_download ? 17'h1ffff : snd_addr[17:1] ),
 	.cpu2_q        ( snd_do ),
-        .cpu3_addr     ( ),
-        .cpu3_q        ( ),
 
 
 	// port2 for sprite graphics
@@ -491,10 +469,11 @@ target_top target_top(
 	.hwsel(core_mod), // see pkgvariant defines
 	.palmode(1'b0/*palmode*/),
 	.audio_out(audio),
+	//.switches_i(sw[0]),
 	.switches_i(DSW1),
 	.usr_coin1(m_coin_1),
 	.usr_coin2(m_coin_2),
-	.usr_service(1'b0/*service*/),
+	.usr_service(status[10]/*service*/),
 	.usr_start1(m_start),
 	.usr_start2(m_start_2),
 	.p1_up(m_up),
@@ -503,12 +482,12 @@ target_top target_top(
 	.p1_rt(m_right),
 	.p1_f1(m_fireA),
 	.p1_f2(m_fireB),
-	.p2_up(m_up2),
-	.p2_dw(m_down2),
-	.p2_lt(m_left2),
-	.p2_rt(m_right2),
-	.p2_f1(m_fire2A),
-	.p2_f2(m_fire2B),
+	.p2_up(m_up_2),
+	.p2_dw(m_down_2),
+	.p2_lt(m_left_2),
+	.p2_rt(m_right_2),
+	.p2_f1(m_fireA_2),
+	.p2_f2(m_fireB_2),
 	.hblank(hblank),
 	.vblank(vblank),
 	.VGA_VS(vs),
