@@ -104,8 +104,9 @@ assign LED_USER  = ioctl_download;
 assign LED_DISK  = 0;
 assign LED_POWER = 0;
 
-assign HDMI_ARX = status[1] ? 8'd16 : (status[2]  ) ? 8'd4 : 8'd3;
-assign HDMI_ARY = status[1] ? 8'd9  : (status[2]  ) ? 8'd3 : 8'd4;
+assign HDMI_ARX = status[1] ? 8'd16 : (status[2] | landscape) ? 8'd4 : 8'd3;
+assign HDMI_ARY = status[1] ? 8'd9  : (status[2] | landscape) ? 8'd3 : 8'd4;
+
 
 `include "build_id.v" 
 localparam CONF_STR = {
@@ -119,8 +120,8 @@ localparam CONF_STR = {
 	"OA,Service,Off,On;",
 	"-;",
 	"R0,Reset;",
-	"J1,Fire,Start 1P,Start 2P,Coin,Cheat;",
-	"jn,A,Start,Select,R,L;",
+	"J1,Dig Left,Dig Right,Start 1P,Start 2P,Coin;",
+	"jn,A,B,Start,Select,R;",
 	"V,v",`BUILD_DATE
 };
 
@@ -135,14 +136,26 @@ always @(posedge clk_sys) begin
         if (ioctl_wr & (ioctl_index==1)) core_mod <= ioctl_dout;
 end
 
+reg landscape;
+reg ccw;
+
 always @(*) begin
   orientation = 2'b10;
   oneplayer = 1;
-
+  landscape = 1;
+  ccw = 0;
   case (core_mod)
   8'h3: oneplayer = 0; // LDRUN4
-  8'h6: orientation = 2'b11; // BATTROAD
-  8'hB: orientation = 2'b01; // YOUJYUDN
+  8'h6: 
+	begin
+	orientation = 2'b11; // BATTROAD
+        landscape = 0;
+        end
+	8'hB: begin
+	   orientation = 2'b01; // YOUJYUDN
+           landscape = 0;
+	   ccw = 1;
+     end
   default: ;
   endcase
 end
@@ -196,7 +209,7 @@ hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
 
 	.buttons(buttons),
 	.status(status),
-	.status_menumask(direct_video),
+	.status_menumask({landscape,direct_video}),
 	.forced_scandoubler(forced_scandoubler),
 	.gamma_bus(gamma_bus),
 	.direct_video(direct_video),
@@ -247,6 +260,7 @@ always @(posedge clk_sys) begin
 			'h023: btn_left_2      <= pressed; // D
 			'h034: btn_right_2     <= pressed; // G
 			'h01C: btn_fireA_2      <= pressed; // A
+			'h01B: btn_fireB_2      <= pressed; // S
 		endcase
 	end
 end
@@ -269,8 +283,9 @@ reg btn_down_2=0;
 reg btn_left_2=0;
 reg btn_right_2=0;
 reg btn_fireA_2=0;
+reg btn_fireB_2=0;
 
-wire no_rotate = status[2] | direct_video  ;
+wire no_rotate = status[2] | direct_video | landscape  ;
 
 wire m_start    = btn_start_1 | joy1[5] | joy2[5];
 wire m_start_2  = btn_start_2 | joy1[6] | joy2[6];
@@ -290,13 +305,13 @@ wire m_down_2   =  btn_down_2  | joy2[2];
 wire m_left_2   =  btn_left_2  | joy2[1];
 wire m_right_2  =  btn_right_2 | joy2[0];
 wire m_fireA_2   = btn_fireA_2 | joy2[4];
-wire m_fireB_2   = /*btn_fire_2 |*/ joy2[5];
+wire m_fireB_2   = btn_fireB_2 | joy2[5];
 
 wire hblank, vblank;
 wire hs, vs;
 wire [3:0] r,g,b;
 
-
+/*
 //wire CLK_VIDEO = clkref;
 wire CLK_VIDEO = clk_vid;
 //wire CE_PIXEL  = 1;
@@ -318,8 +333,8 @@ assign VGA_HS= hs;
 assign VGA_VS =vs;
 assign VGA_DE = ~(vblank | hblank);
 //assign VGA_F1,
+*/
 
-/*
 
 reg ce_pix;
 always @(posedge clk_vid) begin
@@ -343,11 +358,11 @@ arcade_video #(256,400,12) arcade_video
 	.HSync(hs),
 	.VSync(vs),
 
-	.rotate_ccw(0),
+	.rotate_ccw(ccw),
 	.fx(status[5:3])
 );
 
-*/
+
 
 assign AUDIO_L = {audio, 4'd0};
 assign AUDIO_R = AUDIO_L;
