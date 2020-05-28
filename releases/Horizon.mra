@@ -10,7 +10,7 @@
         <dip bits="10,11"   name="Bonus Life" ids="40k/80k,60k/100k,80k/120k,100k/80k"/>
     </switches>
     <rom index="1"><part>5</part></rom>
-    <rom index="0" zip="horizon.zip" md5="573ef5ced961ede734cdde94153fcb7a" type="merged|nonmerged">
+    <rom index="0" zip="horizon.zip" md5="299eb34fb38a1a4d9d4f02e0520ad8c3" type="merged|nonmerged">
       <!-- CPU1, 128k -->
       <part name="hrza-4e"/>
       <part name="hrza-4d"/>
@@ -29,57 +29,57 @@
       <part name="hrza-3f"/>
 
       <!-- GFX1, 128k -->
-      <group width="32">
-          <part name="hrzd-4d"/>
-          <part name="hrzd-4c"/>
-          <part name="hrzd-4a"/>
-          <part name="hrzd-4a"/>
-      </group>
-      <group width="32">
-          <part name="hrzd-4d"/>
-          <part name="hrzd-4c"/>
-          <part name="hrzd-4a"/>
-          <part name="hrzd-4a"/>
-      </group>
-      <group width="32">
-          <part name="hrzd-4d"/>
-          <part name="hrzd-4c"/>
-          <part name="hrzd-4a"/>
-          <part name="hrzd-4a"/>
-      </group>
-      <group width="32">
-          <part name="hrzd-4d"/>
-          <part name="hrzd-4c"/>
-          <part name="hrzd-4a"/>
-          <part name="hrzd-4a"/>
-      </group>
+      <interleave output="32">
+          <part name="hrzd-4d" map="0001"/>
+          <part name="hrzd-4c" map="0010"/>
+          <part name="hrzd-4a" map="0100"/>
+          <part name="hrzd-4a" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="hrzd-4d" map="0001"/>
+          <part name="hrzd-4c" map="0010"/>
+          <part name="hrzd-4a" map="0100"/>
+          <part name="hrzd-4a" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="hrzd-4d" map="0001"/>
+          <part name="hrzd-4c" map="0010"/>
+          <part name="hrzd-4a" map="0100"/>
+          <part name="hrzd-4a" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="hrzd-4d" map="0001"/>
+          <part name="hrzd-4c" map="0010"/>
+          <part name="hrzd-4a" map="0100"/>
+          <part name="hrzd-4a" map="1000"/>
+      </interleave>
 
       <!-- GFX2, 256k -->
-      <group width="32">
-          <part name="hrzb-4k.00"/>
-          <part name="hrzb-3n.10"/>
-          <part name="hrzb-4c.20"/>
-          <part name="hrzb-4c.20"/>
-      </group>
-      <group width="32">
-          <part name="hrzb-4f.01"/>
-          <part name="hrzb-4n.11"/>
-          <part name="hrzb-4e.21"/>
-          <part name="hrzb-4e.21"/>
-      </group>
+      <interleave output="32">
+          <part name="hrzb-4k.00" map="0001"/>
+          <part name="hrzb-3n.10" map="0010"/>
+          <part name="hrzb-4c.20" map="0100"/>
+          <part name="hrzb-4c.20" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="hrzb-4f.01" map="0001"/>
+          <part name="hrzb-4n.11" map="0010"/>
+          <part name="hrzb-4e.21" map="0100"/>
+          <part name="hrzb-4e.21" map="1000"/>
+      </interleave>
 
-      <group width="32">
-          <part name="hrzb-4k.00"/>
-          <part name="hrzb-3n.10"/>
-          <part name="hrzb-4c.20"/>
-          <part name="hrzb-4c.20"/>
-      </group>
-      <group width="32">
-          <part name="hrzb-4f.01"/>
-          <part name="hrzb-4n.11"/>
-          <part name="hrzb-4e.21"/>
-          <part name="hrzb-4e.21"/>
-      </group>
+      <interleave output="32">
+          <part name="hrzb-4k.00" map="0001"/>
+          <part name="hrzb-3n.10" map="0010"/>
+          <part name="hrzb-4c.20" map="0100"/>
+          <part name="hrzb-4c.20" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="hrzb-4f.01" map="0001"/>
+          <part name="hrzb-4n.11" map="0010"/>
+          <part name="hrzb-4e.21" map="0100"/>
+          <part name="hrzb-4e.21" map="1000"/>
+      </interleave>
 
       <!-- GFX3, 64k -->
       <part repeat="0x10000">FF</part>
