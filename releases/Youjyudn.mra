@@ -9,7 +9,7 @@
         <dip bits="8,9" name="Lives" ids="3,2,4,5"/>
     </switches>
     <rom index="1"><part>0B</part></rom>
-    <rom index="0" zip="youjyudn.zip" md5="88142ed9adb6ffff9643cc7fa6bae82b" type="merged|nonmerged">
+    <rom index="0" zip="youjyudn.zip" md5="37873f2ab65dd62d44fcf02d4b1e7803" type="merged|nonmerged">
       <!-- CPU1, 128k -->
       <part name="yju_a4eb.bin"/>
       <part name="yju_a4db.bin"/>
@@ -24,46 +24,46 @@
       <part name="yju_a3fb.bin"/>
 
       <!-- GFX1, 128k -->
-      <group width="32">
-          <part name="yju_p3bb.0"/>
-          <part name="yju_p1bb.1"/>
-          <part name="yju_p1cb.2"/>
-          <part name="yju_p1cb.2"/>
-      </group>
+      <interleave output="32">
+          <part name="yju_p3bb.0" map="0001"/>
+          <part name="yju_p1bb.1" map="0010"/>
+          <part name="yju_p1cb.2" map="0100"/>
+          <part name="yju_p1cb.2" map="1000"/>
+      </interleave>
 
       <!-- GFX2, 256k -->
-      <group width="32">
-          <part name="yju_b4ka.00"/>
-          <part name="yju_b3na.10"/>
-          <part name="yju_b4ca.20"/>
-          <part name="yju_b4ca.20"/>
-      </group>
-      <group width="32">
-          <part name="yju_b4fa.01"/>
-          <part name="yju_b4na.11"/>
-          <part name="yju_b4ea.21"/>
-          <part name="yju_b4ea.21"/>
-      </group>
-      <group width="32">
-          <part name="yju_b4ka.00"/>
-          <part name="yju_b3na.10"/>
-          <part name="yju_b4ca.20"/>
-          <part name="yju_b4ca.20"/>
-      </group>
-      <group width="32">
-          <part name="yju_b4fa.01"/>
-          <part name="yju_b4na.11"/>
-          <part name="yju_b4ea.21"/>
-          <part name="yju_b4ea.21"/>
-      </group>
+      <interleave output="32">
+          <part name="yju_b4ka.00" map="0001"/>
+          <part name="yju_b3na.10" map="0010"/>
+          <part name="yju_b4ca.20" map="0100"/>
+          <part name="yju_b4ca.20" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="yju_b4fa.01" map="0001"/>
+          <part name="yju_b4na.11" map="0010"/>
+          <part name="yju_b4ea.21" map="0100"/>
+          <part name="yju_b4ea.21" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="yju_b4ka.00" map="0001"/>
+          <part name="yju_b3na.10" map="0010"/>
+          <part name="yju_b4ca.20" map="0100"/>
+          <part name="yju_b4ca.20" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="yju_b4fa.01" map="0001"/>
+          <part name="yju_b4na.11" map="0010"/>
+          <part name="yju_b4ea.21" map="0100"/>
+          <part name="yju_b4ea.21" map="1000"/>
+      </interleave>
 
       <!-- GFX3, 64k -->
-      <group width="32">
-          <part name="yju_p4pb.0"/>
-          <part name="yju_p4mb.1"/>
-          <part name="yju_p4lb.2"/>
-          <part name="yju_p4lb.2"/>
-      </group>
+      <interleave output="32">
+          <part name="yju_p4pb.0" map="0001"/>
+          <part name="yju_p4mb.1" map="0010"/>
+          <part name="yju_p4lb.2" map="0100"/>
+          <part name="yju_p4lb.2" map="1000"/>
+      </interleave>
 
       <!-- spr_color_proms, 3*256b -->
       <part name="yju_b1ma.r"/>
