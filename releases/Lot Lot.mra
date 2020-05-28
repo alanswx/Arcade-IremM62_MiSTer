@@ -5,7 +5,7 @@
     <manufacturer>Irem</manufacturer>
     <rbf>iremm62</rbf>
     <rom index="1"><part>8</part></rom>
-    <rom index="0" zip="lotlot.zip" md5="dbd20cd8f5d2555911090e62e4621920" type="merged|nonmerged">
+    <rom index="0" zip="lotlot.zip" md5="fe1becf4cf496401a81ad1fc1d102e5d" type="merged|nonmerged">
       <!-- CPU1, 128k -->
       <part name="lot-a-4e"/>
       <part name="lot-a-4d"/>
@@ -20,94 +20,94 @@
       <part repeat="8" name="lot-a-3h"/>
 
       <!-- GFX1, 128k -->
-      <group width="32">
-          <part name="lot-k-4a"/>
-          <part name="lot-k-4c"/>
-          <part name="lot-k-4b"/>
-          <part name="lot-k-4b"/>
-      </group>
-      <group width="32">
-          <part name="lot-k-4a"/>
-          <part name="lot-k-4c"/>
-          <part name="lot-k-4b"/>
-          <part name="lot-k-4b"/>
-      </group>
-      <group width="32">
-          <part name="lot-k-4a"/>
-          <part name="lot-k-4c"/>
-          <part name="lot-k-4b"/>
-          <part name="lot-k-4b"/>
-      </group>
-      <group width="32">
-          <part name="lot-k-4a"/>
-          <part name="lot-k-4c"/>
-          <part name="lot-k-4b"/>
-          <part name="lot-k-4b"/>
-      </group>
+      <interleave output="32">
+          <part name="lot-k-4a" map="0001"/>
+          <part name="lot-k-4c" map="0010"/>
+          <part name="lot-k-4b" map="0100"/>
+          <part name="lot-k-4b" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-k-4a" map="0001"/>
+          <part name="lot-k-4c" map="0010"/>
+          <part name="lot-k-4b" map="0100"/>
+          <part name="lot-k-4b" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-k-4a" map="0001"/>
+          <part name="lot-k-4c" map="0010"/>
+          <part name="lot-k-4b" map="0100"/>
+          <part name="lot-k-4b" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-k-4a" map="0001"/>
+          <part name="lot-k-4c" map="0010"/>
+          <part name="lot-k-4b" map="0100"/>
+          <part name="lot-k-4b" map="1000"/>
+      </interleave>
 
       <!-- GFX2, 256k -->
-      <group width="32">
-          <part name="lot-b-4k"/>
-          <part name="lot-b-3n"/>
-          <part name="lot-b-4c"/>
-          <part name="lot-b-4c"/>
-      </group>
-      <group width="32">
-          <part name="lot-b-4k"/>
-          <part name="lot-b-3n"/>
-          <part name="lot-b-4c"/>
-          <part name="lot-b-4c"/>
-      </group>
-      <group width="32">
-          <part name="lot-b-4k"/>
-          <part name="lot-b-3n"/>
-          <part name="lot-b-4c"/>
-          <part name="lot-b-4c"/>
-      </group>
-      <group width="32">
-          <part name="lot-b-4k"/>
-          <part name="lot-b-3n"/>
-          <part name="lot-b-4c"/>
-          <part name="lot-b-4c"/>
-      </group>
-      <group width="32">
-          <part name="lot-b-4k"/>
-          <part name="lot-b-3n"/>
-          <part name="lot-b-4c"/>
-          <part name="lot-b-4c"/>
-      </group>
-      <group width="32">
-          <part name="lot-b-4k"/>
-          <part name="lot-b-3n"/>
-          <part name="lot-b-4c"/>
-          <part name="lot-b-4c"/>
-      </group>
-      <group width="32">
-          <part name="lot-b-4k"/>
-          <part name="lot-b-3n"/>
-          <part name="lot-b-4c"/>
-          <part name="lot-b-4c"/>
-      </group>
-      <group width="32">
-          <part name="lot-b-4k"/>
-          <part name="lot-b-3n"/>
-          <part name="lot-b-4c"/>
-          <part name="lot-b-4c"/>
-      </group>
+      <interleave output="32">
+          <part name="lot-b-4k" map="0001"/>
+          <part name="lot-b-3n" map="0010"/>
+          <part name="lot-b-4c" map="0100"/>
+          <part name="lot-b-4c" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-b-4k" map="0001"/>
+          <part name="lot-b-3n" map="0010"/>
+          <part name="lot-b-4c" map="0100"/>
+          <part name="lot-b-4c" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-b-4k" map="0001"/>
+          <part name="lot-b-3n" map="0010"/>
+          <part name="lot-b-4c" map="0100"/>
+          <part name="lot-b-4c" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-b-4k" map="0001"/>
+          <part name="lot-b-3n" map="0010"/>
+          <part name="lot-b-4c" map="0100"/>
+          <part name="lot-b-4c" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-b-4k" map="0001"/>
+          <part name="lot-b-3n" map="0010"/>
+          <part name="lot-b-4c" map="0100"/>
+          <part name="lot-b-4c" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-b-4k" map="0001"/>
+          <part name="lot-b-3n" map="0010"/>
+          <part name="lot-b-4c" map="0100"/>
+          <part name="lot-b-4c" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-b-4k" map="0001"/>
+          <part name="lot-b-3n" map="0010"/>
+          <part name="lot-b-4c" map="0100"/>
+          <part name="lot-b-4c" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-b-4k" map="0001"/>
+          <part name="lot-b-3n" map="0010"/>
+          <part name="lot-b-4c" map="0100"/>
+          <part name="lot-b-4c" map="1000"/>
+      </interleave>
 
       <!-- GFX3, 64k -->
-      <group width="32">
-          <part name="lot-k-4p"/>
-          <part name="lot-k-4l"/>
-          <part name="lot-k-4n"/>
-          <part name="lot-k-4n"/>
-      </group>
-      <group width="32">
-          <part name="lot-k-4p"/>
-          <part name="lot-k-4l"/>
-          <part name="lot-k-4n"/>
-          <part name="lot-k-4n"/>
-      </group>
+      <interleave output="32">
+          <part name="lot-k-4p" map="0001"/>
+          <part name="lot-k-4l" map="0010"/>
+          <part name="lot-k-4n" map="0100"/>
+          <part name="lot-k-4n" map="1000"/>
+      </interleave>
+      <interleave output="32">
+          <part name="lot-k-4p" map="0001"/>
+          <part name="lot-k-4l" map="0010"/>
+          <part name="lot-k-4n" map="0100"/>
+          <part name="lot-k-4n" map="1000"/>
+      </interleave>
 
       <!-- spr_color_proms, 3*256b -->
       <part name="lot-b-1m"/>
