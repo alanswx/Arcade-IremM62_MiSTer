@@ -17,6 +17,7 @@ entity inputs is
     jamma           : in from_JAMMA_t;
 
     dips            : in std_logic_vector(NUM_DIPS-1 downto 0);
+    dips2            : in std_logic_vector(NUM_DIPS-1 downto 0);
     inputs          : out from_MAPPED_INPUTS_t(0 to NUM_INPUTS-1)
   );
 end entity inputs;
@@ -43,6 +44,7 @@ begin
       rst_n     => reset_n,
       jamma     => jamma,
       dips      => dips,
+      dips2      => dips2,
       inputs    => inputs
     );
 

@@ -18,6 +18,7 @@ entity target_top is port(
 		palmode         : in std_logic;
 		audio_out       : out std_logic_vector(11 downto 0);
 		switches_i      : from_SWITCHES_t;
+		switches_2      : from_SWITCHES_t;
 
 		usr_coin1       : in std_logic;
 		usr_coin2       : in std_logic;
@@ -157,6 +158,7 @@ pace_inst : entity work.pace
 		hires           => hires,
 		buttons_i         => buttons_i,
 		switches_i        => switches_i,
+		switches_2        => switches_2,
 		inputs_i          => inputs_i,
 		video_i           => video_i,
 		video_o           => video_o,

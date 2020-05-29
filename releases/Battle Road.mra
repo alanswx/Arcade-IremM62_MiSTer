@@ -6,9 +6,20 @@
     <rbf>iremm62</rbf>
     <switches>
         <!-- DSW1 -->
-        <dip bits="8,9"   name="Fuel Decrease" ids="Slow,Medium,Fast,Fastest"/>
-        <dip bits="10"    name="Difficulty"    ids="Easy,Hard"/>
+        <dip bits="0,1"   name="Fuel Decrease" ids="Slow,Medium,Fast,Fastest"/>
+        <dip bits="2"    name="Difficulty"    ids="Easy,Hard"/>
+        <!-- DSW2 -->
+        <dip bits="8"     name="Flip Screen" ids="Flip,Normal"/>
+        <dip bits="9"     name="Cabinet" ids="Upright,Cocktail"/>
+        <dip bits="10"     name="Coin Mode" ids="Mode 1, Mode 2"/>
+        <dip bits="11"     name="Unknown" ids="Off,On"/>
+        <dip bits="12"     name="Stop Mode Cheat" ids="Off,On"/>
+        <dip bits="13"     name="Unknown" ids="Off,On"/>
+        <dip bits="14"     name="Cheat" ids="Off,On"/>
+        <dip bits="15"     name="Service" ids="Off,On"/>
     </switches>
+    <buttons names="Fire Forward,Fire Right,Start 2P,Start 1P,Coin" default="A,B,Select,Start,R"/>
+
     <rom index="1"><part>6</part></rom>
     <rom index="0" zip="battroad.zip" md5="c5379551c45c24ad7028efd60801cdf7" type="merged|nonmerged">
       <!-- CPU1, 128k -->

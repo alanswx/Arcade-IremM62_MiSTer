@@ -126,9 +126,7 @@ localparam CONF_STR = {
 };
 
 
-reg  [1:0] orientation = 2'b10;
 reg        oneplayer;
-wire [7:0] DSW1 = {/*coinage*/4'hf, ~status[11:8]};
 
 reg [7:0] core_mod = 0;
 
@@ -140,19 +138,18 @@ reg landscape;
 reg ccw;
 
 always @(*) begin
-  orientation = 2'b10;
-  oneplayer = 1;
+ // oneplayer = 1;
   landscape = 1;
   ccw = 0;
   case (core_mod)
-  8'h3: oneplayer = 0; // LDRUN4
+//  8'h3: oneplayer = 0; // LDRUN4
   8'h6: 
 	begin
-	orientation = 2'b11; // BATTROAD
+ // BATTROAD
         landscape = 0;
         end
 	8'hB: begin
-	   orientation = 2'b01; // YOUJYUDN
+	   // YOUJYUDN
            landscape = 0;
 	   ccw = 1;
      end
@@ -248,7 +245,6 @@ always @(posedge clk_sys) begin
 			'h005: btn_start_1     <= pressed; // F1
 			'h006: btn_start_2     <= pressed; // F2
 			'h004: btn_coin        <= pressed; // F3
-			'h00C: btn_cheat       <= pressed; // F4
 
 			// JPAC/IPAC/MAME Style Codes
 			'h016: btn_start_1     <= pressed; // 1
@@ -272,7 +268,6 @@ reg btn_left  = 0;
 reg btn_coin  = 0;
 reg btn_fireA  =0;
 reg btn_fireB  = 0;
-reg btn_cheat = 0;
 
 reg btn_start_1=0;
 reg btn_start_2=0;
@@ -286,13 +281,11 @@ reg btn_fireA_2=0;
 reg btn_fireB_2=0;
 
 wire no_rotate = status[2] | direct_video | landscape  ;
-
-wire m_start    = btn_start_1 | joy1[5] | joy2[5];
+wire m_start    = btn_start_1 | joy1[7] | joy2[7];
 wire m_start_2  = btn_start_2 | joy1[6] | joy2[6];
-wire m_coin_1     = btn_coin    | joy1[7] | btn_coin_1  ;
-wire m_coin_2     =  joy2[7] | btn_coin_2;
+wire m_coin_1     = btn_coin    | joy1[8] | btn_coin_1  ;
+wire m_coin_2     =  joy2[8] | btn_coin_2;
 
-wire m_cheat    = btn_cheat | joy1[8] | joy2[8];
 wire m_up     =   btn_up    | joy1[3];
 wire m_down   =   btn_down  | joy1[2];
 wire m_left   =  btn_left  | joy1[1];
@@ -484,8 +477,8 @@ target_top target_top(
 	.hwsel(core_mod), // see pkgvariant defines
 	.palmode(1'b0/*palmode*/),
 	.audio_out(audio),
-	//.switches_i(sw[0]),
-	.switches_i(DSW1),
+	.switches_i(~sw[0]),
+	.switches_2(~sw[1]),
 	.usr_coin1(m_coin_1),
 	.usr_coin2(m_coin_2),
 	.usr_service(status[10]/*service*/),

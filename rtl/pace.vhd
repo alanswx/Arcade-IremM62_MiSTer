@@ -26,6 +26,7 @@ entity PACE is
     -- misc I/O
     buttons_i       : in from_BUTTONS_t;
     switches_i      : in from_SWITCHES_t;
+    switches_2      : in from_SWITCHES_t;
     leds_o          : out to_LEDS_t;
 
     -- controller inputs
@@ -97,6 +98,7 @@ begin
       jamma           => inputs_i.jamma_n,
 
       dips            => switches_i,
+      dips2            => switches_2,
       inputs          => mapped_inputs
     );
 
