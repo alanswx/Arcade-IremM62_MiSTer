@@ -86,7 +86,10 @@ localparam NO_WRITE_BURST = 1'b1;   // 0= write burst enabled, 1=only single acc
 localparam MODE = { 3'b000, NO_WRITE_BURST, OP_MODE, CAS_LATENCY, ACCESS_TYPE, BURST_LENGTH}; 
 
 // 64ms/8192 rows = 7.8us -> 842 cycles@108MHz
-localparam RFRSH_CYCLES = 10'd842;
+//localparam RFRSH_CYCLES = 10'd842;
+parameter  MHZ = 16'd80; // 80 MHz default clock, set it to proper value to calculate refresh rate
+localparam RFRSH_CYCLES = 16'd78*MHZ/4'd10;
+
 
 // ---------------------------------------------------------------------
 // ------------------------ cycle state machine ------------------------
