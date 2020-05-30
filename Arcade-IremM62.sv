@@ -414,8 +414,6 @@ sdram sdram(
 	.cpu1_q        ( rom_do ),
 	.cpu2_addr     ( ioctl_download ? 17'h1ffff : snd_addr[17:1] ),
 	.cpu2_q        ( snd_do ),
-	.cpu3_addr     ( ),
-	.cpu3_q        ( ),
 
 
 	// port2 for sprite graphics
