@@ -63,7 +63,8 @@ begin
           if palmode = '1' then
             vcnt <= '0'&x"C8";  -- 312 lines/PAL 50 Hz
           else
-            vcnt <= '0'&x"E6";  -- from M52 schematics
+            --vcnt <= '0'&x"E6";  -- from M52 schematics
+            vcnt <= '0'&x"C8";  -- from M52 schematics
           end if;
         end if;
       end if;
@@ -80,7 +81,7 @@ begin
       vblank <= '1';
     elsif rising_edge(clk) and clk_ena = '1' then
       -- display blank
-      if hcnt = "00"&x"FF" then
+      if hcnt = "01"&x"00" then
         hblank1 <= '0';
         if vcnt = '1'&x"00" then
           vblank <= '0';
@@ -103,12 +104,15 @@ begin
       -- display sync
       if hcnt = "00"&x"8B" then
         hsync <= '1';
-        if vcnt = '0'&x"F2" then
+        --if vcnt = '0'&x"F2" then
+        --if vcnt = '0'&x"E6" then
+        if vcnt = '0'&x"E1" then
           vsync <= '1';
         end if;
       end if;
       if hcnt = "00"&x"B1" then
         hsync <= '0';
+        --if vcnt = '0'&x"F4" then
         if vcnt = '0'&x"F4" then
           vsync <= '0';
         end if;
@@ -116,7 +120,8 @@ begin
 
       -- registered rgb output
       if hblank = '1' or vblank = '1' then
-        video_o.rgb <= RGB_BLACK;
+        --video_o.rgb <= RGB_BLACK;
+        video_o.rgb <= RGB_RED;
       else
         video_o.rgb <= rgb_i;
       end if;
