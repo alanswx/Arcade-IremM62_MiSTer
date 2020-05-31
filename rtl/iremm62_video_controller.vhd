@@ -113,7 +113,6 @@ begin
       end if;
       if hcnt = "00"&x"B1" then
         hsync <= '0';
-        --if vcnt = '0'&x"F4" then
         if vcnt = '0'&x"F4" then
           vsync <= '0';
         end if;
