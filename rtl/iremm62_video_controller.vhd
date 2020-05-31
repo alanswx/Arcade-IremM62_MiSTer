@@ -64,7 +64,8 @@ begin
             vcnt <= '0'&x"C8";  -- 312 lines/PAL 50 Hz
           else
             --vcnt <= '0'&x"E6";  -- from M52 schematics
-            vcnt <= '0'&x"C8";  -- from M52 schematics
+		  vcnt <= '0'&x"C8";  -- make it a bit bigger, for lode runner to fit - otherwise 6 and 6 pixels seem
+		                      -- to be missing - not sure why 
           end if;
         end if;
       end if;
@@ -105,8 +106,8 @@ begin
       if hcnt = "00"&x"8B" then
         hsync <= '1';
         --if vcnt = '0'&x"F2" then
-        --if vcnt = '0'&x"E6" then
-        if vcnt = '0'&x"E1" then
+        --if vcnt = '0'&x"E6" then 
+        if vcnt = '0'&x"E1" then --- move this up a bit to get the extra 12 pixels back in lode runner
           vsync <= '1';
         end if;
       end if;
@@ -120,8 +121,8 @@ begin
 
       -- registered rgb output
       if hblank = '1' or vblank = '1' then
-        --video_o.rgb <= RGB_BLACK;
-        video_o.rgb <= RGB_RED;
+        video_o.rgb <= RGB_BLACK;
+        --video_o.rgb <= RGB_RED;
       else
         video_o.rgb <= rgb_i;
       end if;
