@@ -82,7 +82,7 @@ begin
       vblank <= '1';
     elsif rising_edge(clk) and clk_ena = '1' then
       -- display blank
-      if hcnt = "01"&x"00" then
+      if hcnt = "00"&x"FF" then
         hblank1 <= '0';
         if vcnt = '1'&x"00" then
           vblank <= '0';
