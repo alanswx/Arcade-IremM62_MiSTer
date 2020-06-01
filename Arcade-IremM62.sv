@@ -475,8 +475,8 @@ target_top target_top(
 	.hwsel(core_mod), // see pkgvariant defines
 	.palmode(1'b0/*palmode*/),
 	.audio_out(audio),
-	.switches_i(~sw[0]),
-	.switches_2(~sw[1]),
+	.switches_i(sw[0]),
+	.switches_2(sw[1]),
 	.usr_coin1(m_coin_1),
 	.usr_coin2(m_coin_2),
 	.usr_service(1'b0/*service*/),
