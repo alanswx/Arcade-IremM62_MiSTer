@@ -11,7 +11,7 @@
 	<switches default="FF,F5">
 		<dip bits="0,1" name="Energy Decrease" ids="Fastest,Fast,Medium,Slow"></dip>
 		<dip bits="2,3" name="Lives" ids="5,4,2,3"></dip>
-		<dip bits="4,7" name="Coinage" ids="Free Play,8 Coins/3 Credits,5 Coins/3 Credits,3 Coins/2 Credits,2 Coins/3 Credits,1 Coin/6 Credits,1 Coin/5 Credits,1 Coin/4 Credits,1 Coin/3 Credits,1 Coin/2 Credits,6 Coins/1 Credit,5 Coins/1 Credit,4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/1 Credit"></dip>
+                <dip bits="4,7" name="Coinage" ids="Free Play,1C/1P" values="0,15"></dip>
 		<dip bits="8" name="Flip Screen" ids="On,Off"></dip>
 		<dip bits="9" name="Cabinet" ids="Upright,Cocktail"></dip>
 		<dip bits="10" name="Coin Mode" ids="Mode 2,Mode 1"></dip>

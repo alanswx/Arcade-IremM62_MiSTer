@@ -11,7 +11,7 @@
 		<dip bits="0" name="Timer" ids="Fast,Slow"></dip>
 		<dip bits="1" name="2 Players Game" ids="1 Credit,2 Credits"></dip>
 		<dip bits="2,3" name="1 Player Lives" ids="5,4,2,3"></dip>
-		<dip bits="4,7" name="Coinage" ids="Free Play,1 Coin/8 Credits,1 Coin/7 Credits,1 Coin/6 Credits,1 Coin/5 Credits,1 Coin/4 Credits,1 Coin/3 Credits,1 Coin/2 Credits,7 Coins/1 Credit,6 Coins/1 Credit,5 Coins/1 Credit,4 Coins/1 Credit,3 Coins/1 Credit,2 Coins/1 Credit,1 Coin/1 Credit"></dip>
+                <dip bits="4,7" name="Coinage" ids="Free Play,1C/1C" values="0,15"></dip>
 		<dip bits="8" name="Flip Screen" ids="On,Off"></dip>
 		<dip bits="9" name="2 Players Lives" ids="6,5"></dip>
 		<dip bits="10" name="Coin Mode" ids="Mode 2,Mode 1"></dip>
@@ -19,7 +19,7 @@
 		<dip bits="12" name="Allow 2 Players Game" ids="No,Yes"></dip>
 		<dip bits="13" name="Level Selection (Cheat)" ids="On,Off"></dip>
 		<dip bits="14" name="Invulnerability (Cheat)" ids="On,Off"></dip>
-		<dip bits="13" name="Service Mode (must set 2P game to No)" ids="On,Off"></dip>
+		<dip bits="15" name="Service Mode (must set 2P game to No)" ids="On,Off"></dip>
 	</switches>
 	<rom index="1">
 		<part>03</part>
